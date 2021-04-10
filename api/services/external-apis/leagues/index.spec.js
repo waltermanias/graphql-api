@@ -3,7 +3,7 @@ const Service = require(".");
 
 jest.mock("axios");
 
-describe("league services", () => {
+describe("api - league services", () => {
   let service;
   const code = "ABCD";
   beforeAll(() => {
@@ -23,7 +23,7 @@ describe("league services", () => {
       });
 
       beforeEach(async () => {
-        result = await service.getByCode({ code });
+        result = await service.getByCode(code);
       });
 
       test("should return an undefined object", () => {
@@ -44,7 +44,7 @@ describe("league services", () => {
       });
 
       beforeEach(async () => {
-        result = await service.getByCode({ code });
+        result = await service.getByCode(code);
       });
 
       test("should return the league", () => {
@@ -74,7 +74,7 @@ describe("league services", () => {
       });
 
       beforeEach(async () => {
-        result = await service.getByCode({ code });
+        result = await service.getByCode(code);
       });
 
       test("should return an undefined object", () => {
