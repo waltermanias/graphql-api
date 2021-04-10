@@ -9,6 +9,14 @@ const typeDef = new graphql.GraphQLObjectType({
   },
 });
 
+const inputImportLeague = new graphql.GraphQLInputObjectType({
+  name: "InputImportLeague",
+  fields: {
+    code: { type: graphql.GraphQLNonNull(graphql.GraphQLString) },
+  },
+});
+
 module.exports = {
   typeDef,
+  inputImportLeague,
 };

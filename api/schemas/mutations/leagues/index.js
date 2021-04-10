@@ -1,13 +1,16 @@
 const graphql = require("graphql");
-const { typeDef: leagueType } = require("../../types/league");
+const {
+  typeDef: leagueType,
+  inputImportLeague,
+} = require("../../types/league");
 
 const importLeague = {
   type: leagueType,
   args: {
-    code: { type: graphql.GraphQLString },
+    input: { type: new graphql.GraphQLNonNull(inputImportLeague) },
   },
-  resolve: (_, { code }) => {
-    return { code, name: "league A", id: 24 };
+  resolve: (_, { leagueCode }) => {
+    return { code: leagueCode, name: "league A", id: 24 };
   },
 };
 

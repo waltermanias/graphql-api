@@ -4,7 +4,7 @@ const { typeDef: teamType, inputImportTeam } = require("../../types/team");
 const importTeam = {
   type: teamType,
   args: {
-    input: { type: inputImportTeam },
+    input: { type: new graphql.GraphQLNonNull(inputImportTeam) },
   },
   resolve: (_, { input }) => {
     return { code: input.code, name: "team A", id: 24 };
