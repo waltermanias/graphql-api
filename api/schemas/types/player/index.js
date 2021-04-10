@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 
 const typeDef = new graphql.GraphQLObjectType({
-  name: "League",
+  name: "Player",
   fields: {
     id: { type: graphql.GraphQLInt },
     name: { type: graphql.GraphQLString },
@@ -9,14 +9,14 @@ const typeDef = new graphql.GraphQLObjectType({
   },
 });
 
-const inputImportLeague = new graphql.GraphQLInputObjectType({
-  name: "InputImportLeague",
+const inputImportPlayer = new graphql.GraphQLInputObjectType({
+  name: "InputImportPlayer",
   fields: {
-    leagueCode: { type: graphql.GraphQLNonNull(graphql.GraphQLString) },
+    playerCode: { type: graphql.GraphQLNonNull(graphql.GraphQLString) },
   },
 });
 
 module.exports = {
   typeDef,
-  inputImportLeague,
+  inputImportPlayer,
 };

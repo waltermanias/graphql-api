@@ -1,14 +1,18 @@
 const graphql = require("graphql");
 
-const { importTeam } = require("./teams");
-const { importLeague } = require("./leagues");
+module.exports = (resolvers) => {
+  const { importTeam } = require("./teams")(resolvers);
+  const { importLeague } = require("./leagues")(resolvers);
 
-const rootMutationType = new graphql.GraphQLObjectType({
-  name: "Mutation",
-  fields: {
-    importTeam,
-    importLeague,
-  },
-});
+  const rootMutationType = new graphql.GraphQLObjectType({
+    name: "Mutation",
+    fields: {
+      importTeam,
+      importLeague,
+    },
+  });
 
-module.exports = { rootMutationType };
+  return {
+    rootMutationType,
+  };
+};

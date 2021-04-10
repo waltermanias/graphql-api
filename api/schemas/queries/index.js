@@ -1,15 +1,23 @@
 const graphql = require("graphql");
-const { team, teams } = require("./teams");
-const { league, leagues } = require("./leagues");
 
-const rootQueryType = new graphql.GraphQLObjectType({
-  name: "Query",
-  fields: {
-    team,
-    teams,
-    league,
-    leagues,
-  },
-});
+module.exports = (resolvers) => {
+  const { getTeamByCode, getTeams } = require("./teams")(resolvers);
+  const { getLeagueByCode, getLeagues } = require("./leagues")(resolvers);
+  const { getPlayerByCode, getPlayers } = require("./players")(resolvers);
 
-module.exports = { rootQueryType };
+  const rootQueryType = new graphql.GraphQLObjectType({
+    name: "Query",
+    fields: {
+      getTeamByCode,
+      getTeams,
+      getLeagueByCode,
+      getLeagues,
+      getPlayerByCode,
+      getPlayers,
+    },
+  });
+
+  return {
+    rootQueryType,
+  };
+};

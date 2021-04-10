@@ -1,11 +1,13 @@
 const graphql = require("graphql");
-const { rootQueryType } = require("./queries");
-const { rootMutationType } = require("./mutations");
 
-module.exports = {
-  buildSchema: () =>
-    new graphql.GraphQLSchema({
-      query: rootQueryType,
-      mutation: rootMutationType,
-    }),
+module.exports = (resolvers) => {
+  const { rootQueryType } = require("./queries")(resolvers);
+  const { rootMutationType } = require("./mutations")(resolvers);
+  return {
+    buildSchema: () =>
+      new graphql.GraphQLSchema({
+        query: rootQueryType,
+        mutation: rootMutationType,
+      }),
+  };
 };

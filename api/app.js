@@ -1,11 +1,17 @@
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
-const { buildSchema } = require("./schemas");
 
 const createApp = () => {
   const app = express();
 
-  app.use("/graphql", graphqlHTTP({ schema: buildSchema(), graphiql: true }));
+  const services = require("./services");
+  const resolvers = require("./resolvers")(services);
+  const schemaBuilder = require("./schemas")(resolvers);
+
+  app.use(
+    "/graphql",
+    graphqlHTTP({ schema: schemaBuilder.buildSchema(), graphiql: true })
+  );
 
   return app;
 };
