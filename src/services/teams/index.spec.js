@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
 const Service = require(".");
-const Model = require("../../models/competitions");
+const Model = require("../../models/teams");
 
-jest.mock("../../models/competitions");
+jest.mock("../../models/teams");
 
-describe("leagues service", () => {
+describe("teams service", () => {
   let service;
 
   beforeAll(() => {
@@ -17,10 +16,12 @@ describe("leagues service", () => {
 
     beforeAll(async () => {
       const data = {
-        name: "league-a",
-        area: "area-a",
-        code: "league-code",
-        teams: ["53c934bbf299ab241a6e0524"],
+        name: "team-name",
+        shortName: "team-shortname",
+        tla: "team-tla",
+        area: "team-area",
+        imageUrl: "team-imageurl",
+        code: "team-code",
       };
 
       spySave = jest.spyOn(Model.prototype, "save");
@@ -35,16 +36,18 @@ describe("leagues service", () => {
 
     test("should call the constructor with params", () => {
       expect(Model).toHaveBeenCalledWith({
-        area: "area-a",
-        code: "league-code",
-        name: "league-a",
-        teams: [new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524")],
+        area: "team-area",
+        code: "team-code",
+        imageUrl: "team-imageurl",
+        name: "team-name",
+        shortName: "team-shortname",
+        tla: "team-tla",
       });
     });
     test("should call the save method", () => {
       expect(spySave).toHaveBeenCalled();
     });
-    test("should return the league", () => {
+    test("should return the team", () => {
       expect(result).toEqual({ id: "test-returned" });
     });
   });
