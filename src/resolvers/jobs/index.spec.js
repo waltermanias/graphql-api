@@ -10,7 +10,7 @@ jest.mock("../../converters/jobs", () => ({
 describe("job resolver", () => {
   let resolver;
   let jobServices;
-  let spyConvert;
+
   beforeAll(() => {
     jobServices = {
       create: jest.fn().mockResolvedValue({
