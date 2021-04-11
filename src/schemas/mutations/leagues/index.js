@@ -4,15 +4,13 @@ const {
   inputImportLeague,
 } = require("../../types/league");
 
-module.exports = (resolvers) => {
+module.exports = ({ leagues }) => {
   const importLeague = {
     type: leagueType,
     args: {
       input: { type: new graphql.GraphQLNonNull(inputImportLeague) },
     },
-    resolve: (_, { input: { leagueCode } }) => {
-      return { code: leagueCode, name: "league A", id: 24 };
-    },
+    resolve: (_, { input: { leagueCode } }) => leagues.importLeague(leagueCode),
   };
   return { importLeague };
 };
