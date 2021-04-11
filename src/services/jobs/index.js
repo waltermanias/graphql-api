@@ -7,9 +7,13 @@ module.exports = () => {
     }).save();
   };
 
+  const getByLeagueCode = async ({ leagueCode, status }) => {
+    return Job.findOne({ leagueCode, status });
+  };
+
   const getById = async (id) => {
     return Job.findOne({ _id: id });
   };
 
-  return { getById, create };
+  return { getById, create, getByLeagueCode };
 };

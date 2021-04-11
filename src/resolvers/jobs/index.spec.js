@@ -8,6 +8,7 @@ describe("job resolver", () => {
 
   beforeAll(() => {
     jobsService = {
+      getByLeagueCode: jest.fn().mockResolvedValue(undefined),
       create: jest.fn().mockResolvedValue({
         _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
         status: "READY",
@@ -18,25 +19,49 @@ describe("job resolver", () => {
   });
 
   describe("createJob method", () => {
-    let result;
-    beforeAll(async () => {
-      result = await resolver.createJob("league-code");
-    });
+    describe("when there is a waiting job", () => {
+      let result;
+      beforeAll(async () => {
+        jobsService.getByLeagueCode.mockResolvedValueOnce({
+          _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+          status: "WAITING",
+        });
 
-    afterAll(() => {
-      jest.clearAllMocks();
-    });
+        result = await resolver.createJob("league-code");
+      });
 
-    test("should call create method with params", () => {
-      expect(jobsService.create).toHaveBeenCalledWith({
-        leagueCode: "league-code",
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      test("should return the existing job", () => {
+        expect(result).toEqual({
+          _id: mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+          status: "WAITING",
+        });
       });
     });
 
-    test("should return the converted data", () => {
-      expect(result).toEqual({
-        _id: mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
-        status: "READY",
+    describe("when there is not a waiting job", () => {
+      let result;
+      beforeAll(async () => {
+        result = await resolver.createJob("league-code");
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+      test("should call create method with params", () => {
+        expect(jobsService.create).toHaveBeenCalledWith({
+          leagueCode: "league-code",
+        });
+      });
+
+      test("should return the data", () => {
+        expect(result).toEqual({
+          _id: mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+          status: "READY",
+        });
       });
     });
   });
