@@ -1,16 +1,10 @@
-const { convert } = require("../../converters/jobs");
-
-module.exports = ({ jobServices }) => {
-  const importLeague = async (leagueCode) => {
-    const job = await jobServices.create({ leagueCode });
-    return convert(job);
-  };
+module.exports = ({ jobsService }) => {
+  const createJob = async (leagueCode) => jobsService.create({ leagueCode });
 
   const getJobs = async ({ status }) => {};
 
   return {
-    importLeague,
+    createJob,
     getJobs,
   };
 };
-  

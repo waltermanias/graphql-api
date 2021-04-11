@@ -1,15 +1,15 @@
-const leaguesApiService = require("./external-apis/leagues");
-const teamsApiService = require("./external-apis/teams");
-const leaguesService = require("./leagues");
-const teamsService = require("./teams");
-const playersService = require("./players");
-const jobsService = require("./jobs");
+const LeaguesApiService = require("./external-apis/leagues");
+const TeamsApiService = require("./external-apis/teams");
+const LeaguesService = require("./leagues");
+const TeamsService = require("./teams");
+const PlayersService = require("./players");
+const JobsService = require("./jobs");
 
 module.exports = {
-  leaguesApiService,
-  teamsApiService,
-  leaguesService,
-  teamsService,
-  playersService,
-  jobsService,
+  leaguesApiService: LeaguesApiService(),
+  teamsApiService: TeamsApiService(),
+  leaguesService: LeaguesService(),
+  teamsService: TeamsService(),
+  playersService: PlayersService(),
+  jobsService: JobsService(),
 };

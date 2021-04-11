@@ -1,16 +1,19 @@
 const graphql = require("graphql");
+const { DateTimeResolver, ObjectIDResolver } = require("graphql-scalars");
 
 const typeDef = new graphql.GraphQLObjectType({
   name: "Job",
   fields: {
-    id: { type: graphql.GraphQLInt },
-    leagueCode: { type: graphql.GraphQLString },
-    status: { type: graphql.GraphQLString },
+    id: { type: new graphql.GraphQLNonNull(ObjectIDResolver) },
+    leagueCode: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
+    status: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
+    createdAt: { type: new graphql.GraphQLNonNull(DateTimeResolver) },
+    updatedAt: { type: new graphql.GraphQLNonNull(DateTimeResolver) },
   },
 });
 
-const inputImportLeague = new graphql.GraphQLInputObjectType({
-  name: "InputImportLeague",
+const inputCreateJob = new graphql.GraphQLInputObjectType({
+  name: "InputCreateJob",
   fields: {
     leagueCode: { type: graphql.GraphQLNonNull(graphql.GraphQLString) },
   },
@@ -18,5 +21,5 @@ const inputImportLeague = new graphql.GraphQLInputObjectType({
 
 module.exports = {
   typeDef,
-  inputImportLeague,
+  inputCreateJob,
 };
