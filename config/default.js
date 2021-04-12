@@ -14,4 +14,7 @@ module.exports = {
     token: process.env.FOOTBALL_DATA_API_TOKEN,
     baseUrl: "http://api.football-data.org/v2",
   },
+  batchProcess: {
+    endpoint: process.env.BATCH_PROCESS_ENDPOINT,
+  },
 };

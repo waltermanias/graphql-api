@@ -7,9 +7,16 @@ module.exports = ({ jobsService, pubSubService }) => {
     if (pendingJob) return pendingJob;
     const job = await jobsService.create({ leagueCode });
 
-    pubSubService.publish({ type: "JobCreated", payload: job }).catch((err) => {
-      console.error(err.message);
-    });
+    const { _id, ...restJob } = job.toJSON();
+
+    pubSubService
+      .publish({
+        type: "JobCreated",
+        payload: { id: _id.toString(), ...restJob },
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
 
     return job;
   };

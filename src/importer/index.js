@@ -93,8 +93,8 @@ module.exports = ({
     return localTeam;
   };
 
-  const updateJob = async ({ jobId, status, additionalInfo }) => {
-    const updatedJob = await jobsService.update(jobId, {
+  const updateJob = async ({ job, status, additionalInfo }) => {
+    const updatedJob = await jobsService.update(job.id, {
       status,
       additionalInfo,
     });
@@ -103,7 +103,7 @@ module.exports = ({
       .publish({
         type: "JobStatusChanged",
         payload: {
-          job: { _id: jobId },
+          job,
           status,
           oldStatus: "WAITING",
         },
@@ -130,8 +130,10 @@ module.exports = ({
       teams,
     });
 
-  const processJob = async ({ id: jobId, leagueCode }) => {
-    let updatedJob = await updateJob({ jobId, status: "IN-PROGRESS" });
+  const processJob = async (job) => {
+    let updatedJob = await updateJob({ job, status: "IN-PROGRESS" });
+
+    const { leagueCode } = job;
 
     let league = await leaguesService.getByCode(leagueCode);
     if (!league) {
@@ -164,16 +166,16 @@ module.exports = ({
           teams: importedTeams.map(({ _id }) => _id),
         });
 
-        updatedJob = await updateJob({ jobId, status: "COMPLETED" });
+        updatedJob = await updateJob({ job, status: "COMPLETED" });
       } catch (err) {
         updatedJob = await updateJob({
-          jobId,
+          job,
           status: "FAILED",
           additionalInfo: err.message,
         });
       }
     } else {
-      updatedJob = await updateJob({ jobId, status: "SKIPPED" });
+      updatedJob = await updateJob({ job, status: "SKIPPED" });
     }
 
     return updatedJob;

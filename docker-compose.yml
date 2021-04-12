@@ -6,6 +6,16 @@ services:
       - "3000:3000"
     environment:
       PORT: 3000
+      DB_AUTH_DB: "admin"
+      DB_HOST: "database"
+      DB_PORT: 27017
+      DB_NAME: "football"
+      DB_USERNAME: "root"
+      DB_PASSWORD: "supersecret"
+      BATCH_PROCESS_ENDPOINT: "http://batch:3000/webhooks"
+    depends_on:
+      - batch
+      - database
   batch:
     build: .
     ports:
@@ -13,8 +23,14 @@ services:
     environment:
       PORT: 3000
       FOOTBALL_DATA_API_TOKEN: ${FOOTBALL_DATA_API_TOKEN}
+      DB_AUTH_DB: "admin"
+      DB_HOST: "database"
+      DB_PORT: 27017
+      DB_NAME: "football"
+      DB_USERNAME: "root"
+      DB_PASSWORD: "supersecret"
     depends_on:
-      - api
+      - database
   database:
     image: mongo
     restart: always
