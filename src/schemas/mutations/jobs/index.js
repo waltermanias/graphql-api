@@ -1,14 +1,10 @@
 const graphql = require("graphql");
 
-module.exports = (resolvers) => {
-  const { typeDef: jobType, inputCreateJob } = require("../../types/job")(
-    resolvers
-  );
-
+module.exports = ({ types, resolvers }) => {
   const createJob = {
-    type: jobType,
+    type: types.Job,
     args: {
-      input: { type: new graphql.GraphQLNonNull(inputCreateJob) },
+      input: { type: new graphql.GraphQLNonNull(types.InputCreateJob) },
     },
     resolve: (_, { input: { leagueCode } }) =>
       resolvers.jobs.createJob(leagueCode),

@@ -1,7 +1,7 @@
-module.exports = ({ leaguesService, jobServices }) => {
+module.exports = ({ leaguesService }) => {
   const getByCode = (code) => leaguesService.getByCode({ code });
 
-  const getLeagues = () => leaguesService.getLeagues();
+  const getLeagues = async () => leaguesService.getLeagues();
 
   return {
     getByCode,

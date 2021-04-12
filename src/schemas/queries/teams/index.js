@@ -1,10 +1,8 @@
 const graphql = require("graphql");
 
-module.exports = (resolvers) => {
-  const { typeDef: teamType } = require("../../types/team")(resolvers);
-
+module.exports = ({ types, resolvers }) => {
   const getTeams = {
-    type: new graphql.GraphQLNonNull(graphql.GraphQLList(teamType)),
+    type: new graphql.GraphQLNonNull(graphql.GraphQLList(types.Team)),
     resolve: () => resolvers.teams.getTeams(),
   };
 

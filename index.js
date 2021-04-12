@@ -6,8 +6,8 @@ env.config();
 const serverPort = process.env.PORT;
 
 appFactory
-  .createApp()
-  .then((app) => {
+  .createApp()    
+  .then((app) => {  
     app.listen(serverPort, () => {
       console.log(`Server running on port ${serverPort}...`);
     });

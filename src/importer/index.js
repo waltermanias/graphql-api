@@ -115,8 +115,15 @@ module.exports = ({
     return updatedJob;
   };
 
-  const createLocalLeague = ({ name, area: { name: area }, code, teams }) =>
+  const createLocalLeague = ({
+    id: externalReference,
+    name,
+    area: { name: area },
+    code,
+    teams,
+  }) =>
     leaguesService.create({
+      externalReference,
       name,
       area,
       code,
@@ -135,13 +142,17 @@ module.exports = ({
         const { teams } = await teamsApiService.getByLeagueCode(leagueCode);
 
         const chunks = splitArray(teams, 8);
-        const processedChunks = await Promise.each(chunks, async (chunk) => {
-          const importedTeams = await Promise.map(chunk, importTeam, {
-            concurrency: 8,
-          });
-          await sleep(65000);
-          return importedTeams;
-        });
+        const processedChunks = await Promise.map(
+          chunks,
+          async (chunk) => {
+            const importedTeams = await Promise.map(chunk, importTeam, {
+              concurrency: 8,
+            });
+            await sleep(65000);
+            return importedTeams;
+          },
+          { concurrency: 1 }
+        );
 
         const importedTeams = processedChunks.reduce(
           (acc, cur) => [...acc, ...cur],
