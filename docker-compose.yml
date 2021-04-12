@@ -6,7 +6,15 @@ services:
       - "3000:3000"
     environment:
       PORT: 3000
+  batch:
+    build: .
+    ports:
+      - "3001:3000"
+    environment:
+      PORT: 3000
       FOOTBALL_DATA_API_TOKEN: ${FOOTBALL_DATA_API_TOKEN}
+    depends_on:
+      - api
   database:
     image: mongo
     restart: always

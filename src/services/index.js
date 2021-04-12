@@ -4,6 +4,7 @@ const LeaguesService = require("./leagues");
 const TeamsService = require("./teams");
 const PlayersService = require("./players");
 const JobsService = require("./jobs");
+const PubSubService = require("./pub-sub");
 
 module.exports = {
   leaguesApiService: LeaguesApiService(),
@@ -12,4 +13,5 @@ module.exports = {
   teamsService: TeamsService(),
   playersService: PlayersService(),
   jobsService: JobsService(),
+  pubSubService: PubSubService(),
 };

@@ -6,7 +6,7 @@ const JobModel = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["WAITING", "IMPORTED", "FAILED"],
+      enum: ["WAITING", "IN-PROGRESS", "COMPLETED", "FAILED", "SKIPPED"],
       default: "WAITING",
     },
     additionalInfo: { type: String },

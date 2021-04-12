@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const League = require("../../models/competitions");
+const League = require("../../models/leagues");
 
 module.exports = () => {
   const create = async ({ name, area, code, teams }) => {
@@ -13,10 +13,7 @@ module.exports = () => {
   };
 
   const getByCode = async (code) => {
-    // This code goes to the database
-
-    const myLeague = await League.findOne().lean();
-    return myLeague;
+    return League.findOne({ code });
   };
 
   return { getByCode, create };

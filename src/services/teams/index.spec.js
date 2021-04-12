@@ -21,7 +21,7 @@ describe("teams service", () => {
         tla: "team-tla",
         area: "team-area",
         imageUrl: "team-imageurl",
-        code: "team-code",
+        externalReference: "team-external-reference",
       };
 
       spySave = jest.spyOn(Model.prototype, "save");
@@ -37,11 +37,11 @@ describe("teams service", () => {
     test("should call the constructor with params", () => {
       expect(Model).toHaveBeenCalledWith({
         area: "team-area",
-        code: "team-code",
         imageUrl: "team-imageurl",
         name: "team-name",
         shortName: "team-shortname",
         tla: "team-tla",
+        externalReference: "team-external-reference",
       });
     });
     test("should call the save method", () => {
@@ -49,6 +49,34 @@ describe("teams service", () => {
     });
     test("should return the team", () => {
       expect(result).toEqual({ id: "test-returned" });
+    });
+  });
+
+  describe("getByExternalReference method", () => {
+    beforeAll(async () => {
+      result = await service.getByExternalReference("123");
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("shold call findOne method with params", () => {
+      expect(Model.findOne).toHaveBeenCalledWith({ externalReference: "123" });
+    });
+  });
+
+  describe("getById method", () => {
+    beforeAll(async () => {
+      result = await service.getById("123");
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("shold call findOne method with params", () => {
+      expect(Model.findById).toHaveBeenCalledWith("123");
     });
   });
 });

@@ -1,11 +1,11 @@
-const axios = require("axios");
+const axios = require("../../../commons/axiosApi");
 const Service = require(".");
 
-jest.mock("axios");
+jest.mock("../../../commons/axiosApi");
 
 describe("api - league services", () => {
   let service;
-  const code = "ABCD";
+  const code = "PL";
   beforeAll(() => {
     service = Service();
   });
@@ -13,9 +13,7 @@ describe("api - league services", () => {
     describe("when the league doesn't exist", () => {
       let result;
       beforeAll(() => {
-        axios.get.mockImplementationOnce(() =>
-          Promise.reject({ response: { status: 404 } })
-        );
+        axios.get.mockResolvedValueOnce({ data: undefined });
       });
 
       beforeAll(() => {
@@ -26,7 +24,7 @@ describe("api - league services", () => {
         result = await service.getByCode(code);
       });
 
-      test("should return an undefined object", () => {
+      test("should return an undefined object", async () => {
         expect(result).toBeUndefined();
       });
     });
@@ -53,32 +51,8 @@ describe("api - league services", () => {
 
       test("axios should be called with params", () => {
         expect(axios.get).toHaveBeenCalledWith(
-          `http://api.company.com/v2/competitions/${code}`,
-          {
-            headers: { "X-Auth-Token": "my-test-token" },
-          }
+          `http://api.company.com/v2/competitions/${code}`
         );
-      });
-    });
-
-    describe("when there are too many requests", () => {
-      let result;
-      beforeAll(() => {
-        axios.get.mockImplementationOnce(() =>
-          Promise.reject({ response: { status: 429 } })
-        );
-      });
-
-      beforeAll(() => {
-        jest.clearAllMocks();
-      });
-
-      beforeEach(async () => {
-        result = await service.getByCode(code);
-      });
-
-      test("should return an undefined object", () => {
-        expect(result).toBeUndefined();
       });
     });
   });

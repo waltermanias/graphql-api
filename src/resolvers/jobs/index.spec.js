@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const Resolver = require(".");
 
 describe("job resolver", () => {
@@ -15,7 +14,11 @@ describe("job resolver", () => {
       }),
     };
 
-    resolver = Resolver({ jobsService });
+    pubSubService = {
+      publish: jest.fn().mockResolvedValue({}),
+    };
+
+    resolver = Resolver({ jobsService, pubSubService });
   });
 
   describe("createJob method", () => {
@@ -61,6 +64,16 @@ describe("job resolver", () => {
         expect(result).toEqual({
           _id: mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
           status: "READY",
+        });
+      });
+
+      test("should call publish method", () => {
+        expect(pubSubService.publish).toHaveBeenCalledWith({
+          payload: {
+            _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+            status: "READY",
+          },
+          type: "JobCreated",
         });
       });
     });

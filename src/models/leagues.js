@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const CompetitionModel = new mongoose.Schema(
+const LeagueModel = new mongoose.Schema(
   {
     name: { type: String, required: true },
     area: { type: String, required: true },
@@ -10,8 +10,4 @@ const CompetitionModel = new mongoose.Schema(
   { versionKey: false }
 );
 
-module.exports = mongoose.model(
-  "competitions",
-  CompetitionModel,
-  "competitions"
-);
+module.exports = mongoose.model("leagues", LeagueModel, "leagues");

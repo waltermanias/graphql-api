@@ -41,4 +41,28 @@ describe("jobs service", () => {
       expect(result).toEqual({ id: "test-returned" });
     });
   });
+
+  describe("update method", () => {
+    let spyUpdateOne;
+
+    beforeAll(async () => {
+      spyUpdateOne = jest.spyOn(Model, "updateOne");
+
+      await service.update("test-id", { status: "some-status" });
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("should call updateOne method with params", () => {
+      expect(spyUpdateOne).toHaveBeenCalledWith(
+        {
+          _id: "test-id",
+        },
+        { status: "some-status" },
+        { new: true, omitUndefined: true }
+      );
+    });
+  });
 });

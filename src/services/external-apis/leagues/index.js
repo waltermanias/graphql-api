@@ -1,29 +1,13 @@
-const axios = require("axios");
+const axios = require("../../../commons/axiosApi");
 const config = require("config");
 
 module.exports = () => {
   const getByCode = async (code) => {
-    try {
-      const response = await axios.get(
-        `${config.get(
-          "footballApi.baseUrl"
-        )}/competitions/${code.toUpperCase()}`,
-        {
-          headers: {
-            "X-Auth-Token": config.get("footballApi.token"),
-          },
-        }
-      );
+    const response = await axios.get(
+      `${config.get("footballApi.baseUrl")}/competitions/${code.toUpperCase()}`
+    );
 
-      return response.data;
-    } catch (err) {
-      if (err.response) {
-        if (err.response.status === 404 || err.response.status === 429) {
-          return undefined;
-        }
-      }
-      throw err;
-    }
+    return response.data;
   };
 
   return { getByCode };

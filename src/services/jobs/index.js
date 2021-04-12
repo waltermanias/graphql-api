@@ -15,5 +15,12 @@ module.exports = () => {
     return Job.findOne({ _id: id });
   };
 
-  return { getById, create, getByLeagueCode };
+  const update = async (id, params) => {
+    return Job.updateOne({ _id: id }, params, {
+      new: true,
+      omitUndefined: true,
+    });
+  };
+
+  return { getById, create, getByLeagueCode, update };
 };

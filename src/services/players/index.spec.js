@@ -10,7 +10,7 @@ describe("players service", () => {
     service = Service();
   });
 
-  describe("create method", () => {
+  describe("upsert method", () => {
     let result;
     let spySave;
 
@@ -25,32 +25,64 @@ describe("players service", () => {
         team: "53c934bbf299ab241a6e0524",
       };
 
-      spySave = jest.spyOn(Model.prototype, "save");
-      spySave.mockResolvedValue({ id: "test-returned" });
+      Model.findOneAndUpdate.mockResolvedValue({ id: "test-returned" });
 
-      result = await service.create(data);
+      result = await service.upsert(data);
     });
 
     afterAll(() => {
       jest.clearAllMocks();
     });
 
-    test("should call the constructor with params", () => {
-      expect(Model).toHaveBeenCalledWith({
-        countryOfBirth: "Spain",
-        dateOfBirth: new Date("1996-08-07T00:00:00.000Z"),
-        externalReference: 343,
-        name: "Dani Ceballos",
-        nationality: "Spain",
-        position: "Midfielder",
-        team: "53c934bbf299ab241a6e0524",
-      });
-    });
-    test("should call the save method", () => {
-      expect(spySave).toHaveBeenCalled();
+    test("should call upsert method with params", () => {
+      expect(Model.findOneAndUpdate).toHaveBeenCalledWith(
+        {
+          externalReference: 343,
+        },
+        {
+          countryOfBirth: "Spain",
+          dateOfBirth: new Date("1996-08-07T00:00:00.000Z"),
+          externalReference: 343,
+          name: "Dani Ceballos",
+          nationality: "Spain",
+          position: "Midfielder",
+          team: "53c934bbf299ab241a6e0524",
+        },
+        { new: true, upsert: true }
+      );
     });
     test("should return the team", () => {
       expect(result).toEqual({ id: "test-returned" });
+    });
+  });
+
+  describe("getByTeam", () => {
+    beforeAll(async () => {
+      await service.getByTeam("12345");
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("should call find method with params", () => {
+      expect(Model.find).toHaveBeenCalledWith({
+        team: "12345",
+      });
+    });
+  });
+
+  describe("deleteById", () => {
+    beforeAll(async () => {
+      await service.deleteById("12345");
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("should call findByIdAndRemove with params", () => {
+      expect(Model.findByIdAndRemove).toHaveBeenCalledWith("12345");
     });
   });
 });

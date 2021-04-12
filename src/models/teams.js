@@ -7,7 +7,7 @@ const TeamModel = new mongoose.Schema(
     tla: { type: String, required: true },
     area: { type: String, required: true },
     imageUrl: { type: String },
-    code: { type: String, required: true, index: true },
+    externalReference: { type: Number, required: true, index: true },
   },
   { versionKey: false, toJSON: { virtuals: true } }
 );

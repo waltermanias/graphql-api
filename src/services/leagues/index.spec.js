@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
-const Service = require(".");
-const Model = require("../../models/competitions");
 
-jest.mock("../../models/competitions");
+const Service = require(".");
+const Model = require("../../models/leagues");
+
+jest.mock("../../models/leagues");
 
 describe("leagues service", () => {
   let service;
@@ -46,6 +47,26 @@ describe("leagues service", () => {
     });
     test("should return the league", () => {
       expect(result).toEqual({ id: "test-returned" });
+    });
+  });
+
+  describe("getByCode method", () => {
+    let result;
+    let spyFindOne;
+
+    beforeAll(async () => {
+      spySave = jest.spyOn(Model.prototype, "save");
+      spyFindOne = jest.spyOn(Model, "findOne");
+
+      result = await service.getByCode("league-123");
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("should call findOne method with params", () => {
+      expect(spyFindOne).toHaveBeenCalledWith({ code: "league-123" });
     });
   });
 });

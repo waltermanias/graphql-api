@@ -1,7 +1,7 @@
 const Player = require("../../models/players");
 
 module.exports = () => {
-  const create = async ({
+  const upsert = ({
     name,
     externalReference,
     position,
@@ -10,16 +10,27 @@ module.exports = () => {
     nationality,
     team,
   }) => {
-    return new Player({
-      name,
-      externalReference,
-      position,
-      dateOfBirth,
-      countryOfBirth,
-      nationality,
-      team,
-    }).save();
+    return Player.findOneAndUpdate(
+      { externalReference },
+      {
+        name,
+        externalReference,
+        position,
+        dateOfBirth,
+        countryOfBirth,
+        nationality,
+        team,
+      },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
   };
 
-  return { create };
+  const getByTeam = (teamId) => Player.find({ team: teamId });
+
+  const deleteById = (id) => Player.findByIdAndRemove(id);
+
+  return { upsert, getByTeam, deleteById };
 };
