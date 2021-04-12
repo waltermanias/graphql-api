@@ -112,6 +112,13 @@ module.exports = (resolvers) => {
     },
   });
 
+  const InputTeamFilter = new graphql.GraphQLInputObjectType({
+    name: "InputTeamFilter",
+    fields: {
+      team: { type: TeamFilter },
+    },
+  });
+
   return {
     Team,
     League,
@@ -120,5 +127,6 @@ module.exports = (resolvers) => {
     InputCreateJob,
     InputLeagueFilter,
     InputPlayerFilter,
+    InputTeamFilter,
   };
 };
