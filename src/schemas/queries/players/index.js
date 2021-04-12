@@ -6,7 +6,6 @@ module.exports = ({ types, resolvers }) => {
     args: {
       input: { type: types.InputPlayerFilter },
     },
-
     resolve: (_, { input }) => resolvers.players.getPlayers(input),
   };
   return { getPlayers };

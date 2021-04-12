@@ -21,6 +21,8 @@ module.exports = (resolvers) => {
     },
   });
 
+  
+
   const Team = new graphql.GraphQLObjectType({
     name: "Team",
     fields: {
@@ -98,18 +100,26 @@ module.exports = (resolvers) => {
     },
   });
 
+  const NameFilter = new graphql.GraphQLInputObjectType({
+    name: "NameFilter",
+    fields: {
+      startsWith: { type: graphql.GraphQLString },
+    },
+  });
+
+  const PlayerTeamFilter = new graphql.GraphQLInputObjectType({
+    name: "PlayerTeamFilter",
+    fields: {
+      name: { type: NameFilter },
+    },
+  });
+
   const InputPlayerFilter = new graphql.GraphQLInputObjectType({
     name: "InputPlayerFilter",
     fields: {
       league: { type: LeagueFilter },
       name: { type: PlayerNameFilter },
-    },
-  });
-
-  const LeagueNotFoundError = new graphql.GraphQLObjectType({
-    name: "LeagueNotFoundError",
-    fields: {
-      message: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
+      team: { type: PlayerTeamFilter },
     },
   });
 
@@ -121,6 +131,5 @@ module.exports = (resolvers) => {
     InputCreateJob,
     InputLeagueFilter,
     InputPlayerFilter,
-    LeagueNotFoundError,
   };
 };
