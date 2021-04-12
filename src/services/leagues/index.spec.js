@@ -21,6 +21,7 @@ describe("leagues service", () => {
         name: "league-a",
         area: "area-a",
         code: "league-code",
+        externalReference: "league-id",
         teams: ["53c934bbf299ab241a6e0524"],
       };
 
@@ -39,6 +40,7 @@ describe("leagues service", () => {
         area: "area-a",
         code: "league-code",
         name: "league-a",
+        externalReference: "league-id",
         teams: [new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524")],
       });
     });

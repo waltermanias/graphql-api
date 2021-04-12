@@ -6,7 +6,9 @@ const typeDef = new graphql.GraphQLObjectType({
   fields: {
     id: { type: new graphql.GraphQLNonNull(ObjectIDResolver) },
     name: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
+    area: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
     code: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
+    externalReference: { type: new graphql.GraphQLNonNull(graphql.GraphQLInt) },
     createdAt: { type: new graphql.GraphQLNonNull(DateTimeResolver) },
     updatedAt: { type: new graphql.GraphQLNonNull(DateTimeResolver) },
   },

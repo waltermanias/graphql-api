@@ -6,6 +6,7 @@ const LeagueModel = new mongoose.Schema(
     area: { type: String, required: true },
     code: { type: String, required: true, index: true },
     teams: [{ type: mongoose.Types.ObjectId, ref: "teams" }],
+    externalReference: { type: String, required: true, index: true },
   },
   { versionKey: false, timestamps: true }
 );
