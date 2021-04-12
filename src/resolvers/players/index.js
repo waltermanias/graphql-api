@@ -15,10 +15,27 @@ module.exports = ({ playersService, leaguesService }) => {
       players = await playersService.getAll();
     }
 
-    if (input.name)
-      return players.filter(({ name }) =>
-        name.toLowerCase().startsWith(input.name.startsWith.toLowerCase())
-      );
+    if (input.name || input.team)
+      return players.filter(({ name, team: { name: teamName } }) => {
+        if (input.team) {
+          if (
+            !teamName
+              .toLowerCase()
+              .startsWith(input.team.name.startsWith.toLowerCase())
+          ) {
+            return false;
+          }
+        }
+
+        if (input.name) {
+          if (
+            !name.toLowerCase().startsWith(input.name.startsWith.toLowerCase())
+          ) {
+            return false;
+          }
+        }
+        return true;
+      });
 
     return players;
   };

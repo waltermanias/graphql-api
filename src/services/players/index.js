@@ -30,9 +30,10 @@ module.exports = () => {
 
   const getByTeam = (id) => Player.find({ team: id });
 
-  const getByTeams = (teams) => Player.find({ team: { $in: teams } });
+  const getByTeams = (teams) =>
+    Player.find({ team: { $in: teams } }).populate("team");
 
-  const getAll = () => Player.find({});
+  const getAll = () => Player.find({}).populate("team");
 
   const deleteById = (id) => Player.findByIdAndRemove(id);
 
