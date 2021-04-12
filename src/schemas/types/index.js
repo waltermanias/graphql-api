@@ -82,5 +82,45 @@ module.exports = (resolvers) => {
     },
   });
 
-  return { Team, League, Job, Player, InputCreateJob, InputLeagueFilter };
+  const LeagueFilter = new graphql.GraphQLInputObjectType({
+    name: "LeagueFilter",
+    fields: {
+      code: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
+    },
+  });
+
+  const PlayerNameFilter = new graphql.GraphQLInputObjectType({
+    name: "PlayerNameFilter",
+    fields: {
+      startsWith: {
+        type: graphql.GraphQLString,
+      },
+    },
+  });
+
+  const InputPlayerFilter = new graphql.GraphQLInputObjectType({
+    name: "InputPlayerFilter",
+    fields: {
+      league: { type: LeagueFilter },
+      name: { type: PlayerNameFilter },
+    },
+  });
+
+  const LeagueNotFoundError = new graphql.GraphQLObjectType({
+    name: "LeagueNotFoundError",
+    fields: {
+      message: { type: new graphql.GraphQLNonNull(graphql.GraphQLString) },
+    },
+  });
+
+  return {
+    Team,
+    League,
+    Job,
+    Player,
+    InputCreateJob,
+    InputLeagueFilter,
+    InputPlayerFilter,
+    LeagueNotFoundError,
+  };
 };
