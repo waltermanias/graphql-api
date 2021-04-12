@@ -7,6 +7,7 @@ jest.mock("../../models/leagues");
 
 describe("leagues service", () => {
   let service;
+  const populate = jest.fn();
 
   beforeAll(() => {
     service = Service();
@@ -53,14 +54,15 @@ describe("leagues service", () => {
   });
 
   describe("getByCode method", () => {
-    let result;
     let spyFindOne;
 
     beforeAll(async () => {
       spySave = jest.spyOn(Model.prototype, "save");
       spyFindOne = jest.spyOn(Model, "findOne");
-
-      result = await service.getByCode("league-123");
+      spyFindOne.mockReturnValue({
+        populate,
+      });
+      await service.getByCode("league-123");
     });
 
     afterAll(() => {
@@ -69,6 +71,29 @@ describe("leagues service", () => {
 
     test("should call findOne method with params", () => {
       expect(spyFindOne).toHaveBeenCalledWith({ code: "league-123" });
+    });
+    test("should call populate method with params", () => {
+      expect(populate).toHaveBeenCalledWith("teams");
+    });
+  });
+  describe("getLeagues method", () => {
+    beforeAll(async () => {
+      Model.find.mockReturnValue({
+        populate,
+      });
+      await service.getLeagues();
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("should call findOne method with params", () => {
+      expect(Model.find).toHaveBeenCalledWith({});
+    });
+
+    test("should call populate method with params", () => {
+      expect(populate).toHaveBeenCalledWith("teams");
     });
   });
 });

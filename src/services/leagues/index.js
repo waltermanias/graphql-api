@@ -13,9 +13,9 @@ module.exports = () => {
     }).save();
   };
 
-  const getByCode = async (code) => {
-    return League.findOne({ code });
-  };
+  const getByCode = async (code) => League.findOne({ code }).populate("teams");
 
-  return { getByCode, create };
+  const getLeagues = () => League.find({}).populate("teams");
+
+  return { getByCode, create, getLeagues };
 };
