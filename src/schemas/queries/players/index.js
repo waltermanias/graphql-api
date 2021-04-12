@@ -1,7 +1,8 @@
 const graphql = require("graphql");
-const { typeDef: playerType } = require("../../types/player");
 
-module.exports = ({ players }) => {
+module.exports = (resolvers) => {
+  const { typeDef: playerType } = require("../../types/player")(resolvers);
+
   const getPlayers = {
     type: new graphql.GraphQLList(playerType),
     resolve: () => players.getPlayers(),
@@ -12,7 +13,7 @@ module.exports = ({ players }) => {
     args: {
       code: { type: graphql.GraphQLString },
     },
-    resolve: (_, { code }) => players.getPlayerByCode(code),
+    resolve: (_, { code }) => resolvers.players.getPlayerByCode(code),
   };
 
   return { getPlayers, getPlayerByCode };

@@ -1,7 +1,8 @@
 const graphql = require("graphql");
-const { typeDef: leagueType } = require("../../types/league");
 
-module.exports = ({ leagues }) => {
+module.exports = (resolvers) => {
+  const { typeDef: leagueType } = require("../../types/league")(resolvers);
+
   const getLeagues = {
     type: new graphql.GraphQLList(leagueType),
     resolve: () => leagues.getLeagues(),
@@ -12,7 +13,7 @@ module.exports = ({ leagues }) => {
     args: {
       code: { type: graphql.GraphQLString },
     },
-    resolve: (_, { code }) => leagues.getLeagueByCode(code),
+    resolve: (_, { code }) => resolvers.leagues.getLeagueByCode(code),
   };
 
   return { getLeagues, getLeagueByCode };

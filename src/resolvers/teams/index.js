@@ -1,3 +1,5 @@
 module.exports = ({ teamsService }) => {
-  return {};
+  const getTeams = () => teamsService.getTeams();
+
+  return { getTeams };
 };

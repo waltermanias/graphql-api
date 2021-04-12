@@ -28,7 +28,7 @@ module.exports = () => {
     );
   };
 
-  const getByTeam = (teamId) => Player.find({ team: teamId });
+  const getByTeam = (id) => Player.find({ team: id });
 
   const deleteById = (id) => Player.findByIdAndRemove(id);
 

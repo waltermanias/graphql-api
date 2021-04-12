@@ -1,22 +1,14 @@
 const graphql = require("graphql");
-const { typeDef: teamType } = require("../../types/team");
 
-module.exports = ({ teams }) => {
+module.exports = (resolvers) => {
+  const { typeDef: teamType } = require("../../types/team")(resolvers);
+
   const getTeams = {
-    type: new graphql.GraphQLList(teamType),
-    resolve: () => teams.getTeams(),
-  };
-
-  const getTeamByCode = {
-    type: teamType,
-    args: {
-      code: { type: graphql.GraphQLString },
-    },
-    resolve: (_, { code }) => teams.getTeamByCode(code),
+    type: new graphql.GraphQLNonNull(graphql.GraphQLList(teamType)),
+    resolve: () => resolvers.teams.getTeams(),
   };
 
   return {
     getTeams,
-    getTeamByCode,
   };
 };

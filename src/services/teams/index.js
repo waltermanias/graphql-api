@@ -25,5 +25,7 @@ module.exports = () => {
     return Team.findOne({ externalReference });
   };
 
-  return { create, getByExternalReference, getById };
+  const getTeams = () => Team.find({});
+
+  return { create, getByExternalReference, getById, getTeams };
 };

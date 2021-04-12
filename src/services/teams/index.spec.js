@@ -79,4 +79,18 @@ describe("teams service", () => {
       expect(Model.findById).toHaveBeenCalledWith("123");
     });
   });
+
+  describe("getTeams method", () => {
+    beforeAll(async () => {
+      result = await service.getTeams();
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    test("shold call find method with params", () => {
+      expect(Model.find).toHaveBeenCalledWith({});
+    });
+  });
 });
