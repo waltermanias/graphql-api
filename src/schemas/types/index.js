@@ -75,5 +75,12 @@ module.exports = (resolvers) => {
     },
   });
 
-  return { Team, League, Job, Player, InputCreateJob };
+  const InputLeagueFilter = new graphql.GraphQLInputObjectType({
+    name: "InputLeagueFilter",
+    fields: {
+      code: { type: graphql.GraphQLNonNull(graphql.GraphQLString) },
+    },
+  });
+
+  return { Team, League, Job, Player, InputCreateJob, InputLeagueFilter };
 };

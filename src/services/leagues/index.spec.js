@@ -81,7 +81,7 @@ describe("leagues service", () => {
       Model.find.mockReturnValue({
         populate,
       });
-      await service.getLeagues();
+      await service.getLeagues({ code: "PL" });
     });
 
     afterAll(() => {
@@ -89,7 +89,7 @@ describe("leagues service", () => {
     });
 
     test("should call findOne method with params", () => {
-      expect(Model.find).toHaveBeenCalledWith({});
+      expect(Model.find).toHaveBeenCalledWith({ code: "PL" });
     });
 
     test("should call populate method with params", () => {

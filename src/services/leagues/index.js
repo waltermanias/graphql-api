@@ -15,7 +15,11 @@ module.exports = () => {
 
   const getByCode = async (code) => League.findOne({ code }).populate("teams");
 
-  const getLeagues = () => League.find({}).populate("teams");
+  const getLeagues = ({ code }) => {
+    const filter = {};
+    if (code) filter.code = code;
+    return League.find(filter).populate("teams");
+  };
 
   return { getByCode, create, getLeagues };
 };
