@@ -1,11 +1,14 @@
 const graphql = require("graphql");
+const { DateTimeResolver, ObjectIDResolver } = require("graphql-scalars");
 
 const typeDef = new graphql.GraphQLObjectType({
   name: "Team",
   fields: {
-    id: { type: graphql.GraphQLInt },
+    id: { type: new graphql.GraphQLNonNull(ObjectIDResolver) },
     name: { type: graphql.GraphQLString },
     code: { type: graphql.GraphQLString },
+    createdAt: { type: new graphql.GraphQLNonNull(DateTimeResolver) },
+    updatedAt: { type: new graphql.GraphQLNonNull(DateTimeResolver) },
   },
 });
 

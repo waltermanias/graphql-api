@@ -9,7 +9,7 @@ const TeamModel = new mongoose.Schema(
     imageUrl: { type: String },
     externalReference: { type: Number, required: true, index: true },
   },
-  { versionKey: false, toJSON: { virtuals: true } }
+  { versionKey: false, toJSON: { virtuals: true }, timestamps: true }
 );
 
 TeamModel.virtual("players", {

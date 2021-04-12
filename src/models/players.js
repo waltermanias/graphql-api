@@ -14,7 +14,7 @@ const PlayerModel = new mongoose.Schema(
       index: true,
     },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 module.exports = mongoose.model("players", PlayerModel, "players");

@@ -7,7 +7,7 @@ const LeagueModel = new mongoose.Schema(
     code: { type: String, required: true, index: true },
     teams: [{ type: mongoose.Types.ObjectId, ref: "teams" }],
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 module.exports = mongoose.model("leagues", LeagueModel, "leagues");
