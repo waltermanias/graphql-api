@@ -9,8 +9,10 @@ describe("job resolver", () => {
     jobsService = {
       getByLeagueCode: jest.fn().mockResolvedValue(undefined),
       create: jest.fn().mockResolvedValue({
-        _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
-        status: "READY",
+        toJSON: jest.fn().mockReturnValue({
+          _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+          status: "READY",
+        }),
       }),
     };
 
@@ -62,7 +64,7 @@ describe("job resolver", () => {
 
       test("should return the data", () => {
         expect(result).toEqual({
-          _id: mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+          _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
           status: "READY",
         });
       });
@@ -70,7 +72,7 @@ describe("job resolver", () => {
       test("should call publish method", () => {
         expect(pubSubService.publish).toHaveBeenCalledWith({
           payload: {
-            _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+            id: "53c934bbf299ab241a6e0524",
             status: "READY",
           },
           type: "JobCreated",
