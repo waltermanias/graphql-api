@@ -21,8 +21,6 @@ module.exports = (resolvers) => {
     },
   });
 
-  
-
   const Team = new graphql.GraphQLObjectType({
     name: "Team",
     fields: {
@@ -91,15 +89,6 @@ module.exports = (resolvers) => {
     },
   });
 
-  const PlayerNameFilter = new graphql.GraphQLInputObjectType({
-    name: "PlayerNameFilter",
-    fields: {
-      startsWith: {
-        type: graphql.GraphQLString,
-      },
-    },
-  });
-
   const NameFilter = new graphql.GraphQLInputObjectType({
     name: "NameFilter",
     fields: {
@@ -107,8 +96,8 @@ module.exports = (resolvers) => {
     },
   });
 
-  const PlayerTeamFilter = new graphql.GraphQLInputObjectType({
-    name: "PlayerTeamFilter",
+  const TeamFilter = new graphql.GraphQLInputObjectType({
+    name: "TeamFilter",
     fields: {
       name: { type: NameFilter },
     },
@@ -118,8 +107,8 @@ module.exports = (resolvers) => {
     name: "InputPlayerFilter",
     fields: {
       league: { type: LeagueFilter },
-      name: { type: PlayerNameFilter },
-      team: { type: PlayerTeamFilter },
+      name: { type: NameFilter },
+      team: { type: TeamFilter },
     },
   });
 
