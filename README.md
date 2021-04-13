@@ -42,6 +42,8 @@ http://localhost:3000/graphql
 
 If you want to have pre existing data into your database you can run the command below:
 
+IMPORTANT! The database configuration have to set up in your .env file if you run the command outside the Docker container.
+
 ```
 npm run seed
 ```
