@@ -19,13 +19,19 @@ FOOTBALL_DATA_API_TOKEN=<YOUR_TOKEN_HERE> docker-compose -f "docker-compose.yml"
 ```
 
 That command will run 3 different services:
- - ```api```: Service that hosts the GraphQL endpoint.
- - ```database```: Hosts the database. The service exposes port 27018 so you can use your preferred MongoDB client.
- - ```batch```: Handles all import processes. 
+
+- `api`: Service that hosts the GraphQL endpoint.
+- `database`: Hosts the database. The service exposes port 27018 so you can use your preferred MongoDB client.
+- `batch`: Handles all import processes.
+
+## Architecture
+
+![architecture](file://architecture.png)
 
 ## Usage
 
 Once the services are up and running, you can go to the browser:
+
 ```bash
 http://localhost:3000/graphql
 ```
@@ -87,7 +93,7 @@ query getTeamsByName($name: String!) {
 
 ```
 
-The data looks like this: 
+The data looks like this:
 
 ```
 {
@@ -208,26 +214,31 @@ app
 - `services`: Contains all services to save data into the database and request the external API.
 
 ## Event-Sourcing
+
 There is an example in the `PubSubService`, you can publish events after an action is performed. You can find an example after the job is created or after each state change in the job entity.
 
 ## Nice-to-Have Features
- - Implement a logger library such as `winston` or `bunyan`.
- - Implement some cache libraries such as `redis`.
- - Create a new resource that handles subscriptions, so, you can add custom webhooks.
- - Implement GitHub actions to deploy services to whatever cloud service.
- - Implement some other middleware like cors, helmet, compress, etc.
- - Protect the endpoint with a jwt token.
+
+- Implement a logger library such as `winston` or `bunyan`.
+- Implement some cache libraries such as `redis`.
+- Create a new resource that handles subscriptions, so, you can add custom webhooks.
+- Implement GitHub actions to deploy services to whatever cloud service.
+- Implement some other middleware like cors, helmet, compress, etc.
+- Protect the endpoint with a jwt token.
 
 ## Database decision
 
 The database has been selected based on:
- - Most of the actions are queries. We have only one mutation so far.
- - The resources we're getting are JSON. So, it's easier to handle it with some NoSQL database.
+
+- Most of the actions are queries. We have only one mutation so far.
+- The resources we're getting are JSON. So, it's easier to handle it with some NoSQL database.
 
 ## Contributing
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)
