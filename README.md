@@ -26,7 +26,7 @@ That command will run 3 different services:
 
 ## Architecture
 
-![architecture](file://architecture.png)
+![architecture](https://github.com/waltermanias/graphql-api/blob/main/architecture.png?raw=true)
 
 ## Usage
 
