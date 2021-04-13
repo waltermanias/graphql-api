@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "cross-env NODE_ENV=test jest",
-    "docker": "FOOTBALL_DATA_API_TOKEN=YOUR_TOKEN_HERE docker-compose -f 'docker-compose.yml' up -d --build"
+    "docker": "docker-compose -f 'docker-compose.yml' up -d --build",
+    "seed": "node ./data/index.js"
   },
   "jest": {
     "rootDir": "src",

@@ -38,6 +38,16 @@ http://localhost:3000/graphql
 
 ## Import data from external API
 
+### Data seed
+
+If you want to have pre existing data into your database you can run the command below:
+
+IMPORTANT! The database configuration have to set up in your .env file if you run the command outside the Docker container.
+
+```
+npm run seed
+```
+
 ### Step 1
 
 The data is requested asynchronously, so, you will have to create a job before all. After the job is created in the database, a message is triggered to a second service that will handle the import process.
