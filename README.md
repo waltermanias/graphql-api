@@ -8,21 +8,115 @@ Please, visit [Football API](http://www.football-data.org/), signup there, and g
 
 ## Installation
 
-You'll need to install Docker and Docker Compose in order to run minimal services. You can follow the instructions in the below link:
+### Running inside Docker containers
 
-[Docker Compose Installation](https://docs.docker.com/compose/install/).
+The project was prepared with Docker & Docker Compose to make your life easier.
 
-You can run the next command to load the necessary services. IMPORTANT: Set the env variable with your personal token.
+#### Step 1: Make sure you have on your local computer Docker Engine & Docker Compose
+
+You can check if you already have docker & docker compose executing the following commands.
 
 ```bash
-FOOTBALL_DATA_API_TOKEN=<YOUR_TOKEN_HERE> docker-compose -f "docker-compose.yml" up -d --build
+docker --version
 ```
 
-That command will run 3 different services:
+```bash
+docker-compose --version
+```
+
+If some of the commands throw an error, you can follow the official documentation to install them.
+
+[Docker Compose Installation](https://docs.docker.com/compose/install/)
+
+#### Step 2: Generate the proper `.env`file.
+
+To generate the `.env`you can execute the next command in the Terminal.
+
+```bash
+cp .env-template-docker .env
+```
+
+This command will generate a file called `.env` in your root directory. The only thing you have to do in that file is set the API token, so, your `.env` file will look like the following one:
+
+```
+PORT=3000
+BATCH_PROCESS_ENDPOINT=http://batch:3000/webhooks
+FOOTBALL_DATA_API_TOKEN=****<YOUR_TOKEN_HERE>****
+DB_AUTH_DB=admin
+DB_HOST=database
+DB_PORT=27017
+DB_NAME=football
+DB_USERNAME=root
+DB_PASSWORD=supersecret
+```
+
+#### Step 4: Run all containers
+
+In order to up and running all containers, I attached a script into `package.json` file.
+
+```bash
+npm run docker
+```
+
+This command will read your `.env` file and execute the proper container images.
+
+#### Services
 
 - `api`: Service that hosts the GraphQL endpoint.
 - `database`: Hosts the database. The service exposes port 27018 so you can use your preferred MongoDB client.
 - `batch`: Handles all import processes.
+
+### Running locally
+
+#### Step 1: Install dependencies
+
+```bash
+npm install
+```
+
+#### Step 2: Generate the proper `.env` file
+
+To generate the `.env`you can execute the next command in the Terminal.
+
+```bash
+cp .env-template-localhost .env
+```
+
+This command will generate a file called `.env` in your root directory. You will have to configure some things here. For instance, the database settings and the API token. So, your `.env` file will look like the following one:
+
+```
+PORT=3000
+BATCH_PROCESS_ENDPOINT=http://localhost:3000/webhooks
+FOOTBALL_DATA_API_TOKEN=****<YOUR_TOKEN_HERE>****
+DB_AUTH_DB=****<YOUR_AUTH_DATABASE>****
+DB_HOST=****<YOUR_DB_HOST>****
+DB_PORT=27017
+DB_NAME=football
+DB_USERNAME=****<YOUR_DB_USERNAME>****
+DB_PASSWORD=****<YOUR_DB_PASSWORD>****
+```
+
+#### Step 3: Run the API
+
+```bash
+npm start
+```
+
+Now, you can start playing with the API in your preferred browser.
+
+### Seed data
+
+Optionally, you can seed your database with some data either with script or a curl command.
+
+```bash
+npm run seed
+```
+
+You can run this script or just execute the request using some tool like Postman.
+
+```bash
+curl --location --request POST 'http://localhost:3000/seed'
+```
 
 ## Architecture
 
@@ -37,16 +131,6 @@ http://localhost:3000/graphql
 ```
 
 ## Import data from external API
-
-### Data seed
-
-If you want to have pre existing data into your database you can run the command below:
-
-IMPORTANT! The database configuration have to set up in your .env file if you run the command outside the Docker container.
-
-```
-npm run seed
-```
 
 ### Step 1
 
@@ -205,6 +289,7 @@ app
 └── config
 └── src
     └── commons
+    └── data
     └── database
     └── importer
     └── models
@@ -216,6 +301,7 @@ app
 
 - `config`: You can config here different kinds of things.
 - `commons`: Contains some helpers.
+- `data`: Contains the route that helps you to seed your database.
 - `database`: Handles the database connection.
 - `importer`: Contains all logic to import data from external API.
 - `models`: Contains all mongoose models.
