@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "cross-env NODE_ENV=test jest",
-    "docker": "docker-compose -f 'docker-compose.yml' up -d --build",
-    "seed": "node ./data/index.js"
+    "docker": "docker-compose --env-file .env -f 'docker-compose.yml' up -d --build",
+    "seed": "curl --location --request POST 'http://localhost:3000/seed'"
   },
   "jest": {
     "rootDir": "src",

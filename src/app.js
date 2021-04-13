@@ -24,6 +24,8 @@ const createApp = async () => {
     res.status(200).json({ ok: true });
   });
 
+  app.post("/seed", require("./data"));
+
   return app;
 };
 
