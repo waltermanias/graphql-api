@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "cross-env NODE_ENV=test jest",
-    "docker": "cross-env FOOTBALL_DATA_API_TOKEN=YOUR_TOKEN_HERE docker-compose up"
+    "docker": "FOOTBALL_DATA_API_TOKEN=YOUR_TOKEN_HERE docker-compose -f 'docker-compose.yml' up -d --build"
   },
   "jest": {
     "rootDir": "src",

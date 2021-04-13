@@ -18,7 +18,7 @@ module.exports = ({ jobsService, pubSubService }) => {
         console.error(err.message);
       });
 
-    return { _id, ...restJob };
+    return { id: _id, ...restJob };
   };
 
   const getJobs = async ({ status }) => {};
