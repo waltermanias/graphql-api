@@ -64,7 +64,7 @@ describe("job resolver", () => {
 
       test("should return the data", () => {
         expect(result).toEqual({
-          _id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
+          id: new mongoose.Types.ObjectId("53c934bbf299ab241a6e0524"),
           status: "READY",
         });
       });
