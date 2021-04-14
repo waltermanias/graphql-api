@@ -35,14 +35,25 @@ describe("database connection", () => {
   describe("when something went wrong in the connection", () => {
     const realProcess = process;
     const exitMock = jest.fn();
+    let spyError;
+    let spyLog;
+    let result;
     beforeAll(async () => {
       global.process = { ...realProcess, exit: exitMock };
-      mongoose.connect = jest.fn().mockRejectedValue("Some error");
-      await connection.connect();
+      spyError = jest.spyOn(console, "error").mockImplementation(() => {});
+      spyLog = jest.spyOn(console, "log").mockImplementation(() => {});
+      mongoose.connect = jest.fn().mockRejectedValue({ message: "Some error" });
+      result = await connection.connect();
     });
 
     afterAll(() => {
       global.process = realProcess;
+      console.log.mockRestore();
+      console.error.mockRestore();
+    });
+
+    test("should throw an error ", async () => {
+      expect(result).toBeUndefined();
     });
 
     test("should call process.exit with params", () => {
